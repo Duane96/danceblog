@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block titulo %}Compartir Post{% endblock titulo %}
+{% block content %}
+    {% if sent %}
+        <div class="enviado">
+            <h1>E-mail correctamente enviado</h1>
+             <p>
+                "{{post.titulo}}" fue enviado a {{form.cleaned_data.to}}. 
+            </p>
+        </div>
+    {% else %}
+        <div class="formulario">
+            <h1>Compartir "{{post.titulo}}" por e-mail</h1>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form  %}
+                    {{field.erros}}<br>
+                    {{field.label_tag}}<br>
+                    {{field}}
+                {% endfor %}
+                <br>
+                <input type="submit" class="submit submit-compartir" value="Enviar">
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock content %}
